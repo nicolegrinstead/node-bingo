@@ -1,0 +1,15 @@
+{
+  "name": "node-bingo",
+  "version": "0.0.1",
+  "author": "Nicole Grinstead <nicolergrinstead@gmail.com>",
+  "description": "node bingo app to win cool prizes from yahoo",
+  "contributors": [
+    {
+      "name": "Nicole Grinstead",
+      "email": "nicolergrinstead@gmail.com>"
+    }
+  ],
+  "dependencies": {
+    "socket.io-client": "~0.9.16"
+  }
+}
