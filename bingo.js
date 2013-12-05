@@ -7,7 +7,7 @@ var payload = { name: 'Nicole Grinstead',
 
 //client.emit('register', payload);
 
-var numbers = [2,3,4,5,6,7,11,10,20,37,55,13,73];
+var numbers = [2,3,4,5,6,7,11,10,20,37,55,22,46,62];
 var bingoCard = { slots:
    { B: [ 4, 7, 10, 11, 13 ],
 	 I: [ 20, 22, 25, 33, 36 ],
@@ -22,10 +22,16 @@ function checkForBingo(calledNumbers, card){
 	console.log(calledNumbers);
 
 	if (checkForHorizontalBingo(calledNumbers, bingoCard)){
-		 return true;
+		console.log("HORIZONTAL BINGO!");
+		return true;
 	}
 	if (checkForVerticalBingo(calledNumbers, bingoCard)){
+		console.log("VERTICAL BINGO!");
 		 return true;
+	}
+	if (checkForDiagonalBingo(calledNumbers, bingoCard)){ 
+		console.log("DIAGONAL BINGO!");
+		return true;
 	}
 
 	return false;
@@ -41,7 +47,6 @@ function checkForHorizontalBingo(calledNumbers, bingoCard){
 				horizMatchCount++;
 			}
 			if (horizMatchCount == 5){ 
-				console.log("HORIZONTAL BINGO!");
 				return true;
 			}
 		}
@@ -63,8 +68,26 @@ function checkForVerticalBingo(calledNumbers, bingoCard){
 
 	for (var k in vertMatchCount){ 
 		if (vertMatchCount[k] == 5){ 
-			console.log("VERTICAL BINGO!");
  			return true;
 	    }
 	} 
+}
+
+function checkForDiagonalBingo(calledNumbers, bingoCard){ 
+	var diagCount = 0;
+	var index = 0; 
+	for (var i in bingoCard.slots) {
+		var bingoCardLine = bingoCard.slots[i];
+		for (var j in bingoCardLine){ 
+			if (index==j){
+				var bingoCardNumber = bingoCard.slots[i][j];
+				if(calledNumbers.indexOf(bingoCardNumber) > -1){ 
+					diagCount++;
+				} 
+			}
+		}
+		index++;
+	}
+
+	return diagCount == 5;
 }
