@@ -46,7 +46,7 @@ function checkForHorizontalBingo(calledNumbers, bingoCard){
 		var bingoCardLine = bingoCard.slots[i];
 		var horizMatch = true;
 		bingoCardLine.forEach(function (bingoCardNumber){ 
-			if(calledNumbers.indexOf(bingoCardNumber) == -1){ 
+			if(calledNumbers.indexOf(bingoCardNumber) === -1){ 
 				horizMatch = false;
 			}
 
@@ -61,7 +61,7 @@ function checkForVerticalBingo(calledNumbers, bingoCard){
 		var bingoCardLine = bingoCard.slots[i];
 		bingoCardLine.forEach(function(bingoCardNumber, j){ 
 			var bingoCardNumber = bingoCard.slots[i][j];
-			if(calledNumbers.indexOf(bingoCardNumber) == -1){ 
+			if(calledNumbers.indexOf(bingoCardNumber) === -1){ 
 				vertMatches[j] = false;
 			}
 		});
@@ -80,15 +80,15 @@ function checkForDiagonalBingo(calledNumbers, bingoCard){
 	for (var i in bingoCard.slots) {
 		var bingoCardLine = bingoCard.slots[i];
 		bingoCardLine.forEach(function(bingoCardNumber, j){ 
-			if (index==j){
+			if (index===j){
 				var bingoCardNumber = bingoCard.slots[i][j];
-				if(calledNumbers.indexOf(bingoCardNumber) == -1){
+				if(calledNumbers.indexOf(bingoCardNumber) === -1){
 					diag1Match = false;
 				}
 			}
-			if ((parseInt(index)+parseInt(j)==4)){ 
+			if ((parseInt(index)+parseInt(j)===4)){ 
 				var bingoCardNumber = bingoCard.slots[i][j];
-				if(calledNumbers.indexOf(bingoCardNumber) == -1){ 
+				if(calledNumbers.indexOf(bingoCardNumber) === -1){ 
 					diag2Match = false;
 				} 
 			}
