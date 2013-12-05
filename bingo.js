@@ -26,16 +26,15 @@ client.on('lose', function (message) { console.log("loser :("); });
 client.on('disconnect', function () { console.log("disconnected"); });
 
 function checkForBingo(calledNumbers, card){ 
-	console.log(calledNumbers);
-	if (checkForHorizontalBingo(calledNumbers, bingoCard)){
+	if (checkForHorizontalBingo(calledNumbers, card)){
 		console.log("HORIZONTAL BINGO!");
 		return true;
 	}
-	if (checkForVerticalBingo(calledNumbers, bingoCard)){
+	if (checkForVerticalBingo(calledNumbers, card)){
 		console.log("VERTICAL BINGO!");
 		return true;
 	}
-	if (checkForDiagonalBingo(calledNumbers, bingoCard)){ 
+	if (checkForDiagonalBingo(calledNumbers, card)){ 
 		console.log("DIAGONAL BINGO!");
 		return true;
 	}
@@ -98,3 +97,4 @@ function checkForDiagonalBingo(calledNumbers, bingoCard){
 	}
 	return diag1Match || diag2Match;
 }
+exports.checkForBingo = checkForBingo;
