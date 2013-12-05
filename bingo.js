@@ -1,39 +1,47 @@
 var socketClient = require('socket.io-client');
 
 var client = socketClient.connect('ws://yahoobingo.herokuapp.com');
-var payload = { name: 'Nicole Grinstead',
-  email: 'nicolergrinstead@gmail.com',
+var payload = { name: 'Nicole Grinstead',  email: 'nicolergrinstead@gmail.com',
   url: 'https://github.com/nicolegrinstead/node-bingo' };
 
-//client.emit('register', payload);
+client.emit('register', payload);
 
-var numbers = [2,3,4,5,6,7,11,10,20,37,55,22,46,62];
-var bingoCard = { slots:
-   { B: [ 4, 7, 10, 11, 13 ],
-	 I: [ 20, 22, 25, 33, 36 ],
-	 N: [ 37, 45, 46, 52, 54 ],
-	 G: [ 55, 59, 60, 62, 69 ],
-	 O: [ 73, 74, 76, 77, 78 ] } };
+var bingoCard;
+var numbers = [];
+client.on('connect', function () {
+	console.log("connected");
+})
+client.on('card', function (payload) {
+	bingoCard = payload;
+	console.log("Got bingo card ", bingoCard);
+})
+client.on('number', function (number) {
+	var bingoNumber = parseInt(number.replace(/[a-z]/i,''));
+	numbers.push(bingoNumber);
 
-var hasBingo = checkForBingo(numbers, bingoCard);
-console.log(hasBingo);
+	var hasBingo = checkForBingo(numbers, bingoCard);
+	if (hasBingo){
+		client.emit('bingo'); 
+	}
+})
+client.on('win', function (message) { console.log("WINNER"); })
+client.on('lose', function (message) { console.log("loser :("); })
+client.on('disconnect', function () { console.log("disconnected"); })
 
 function checkForBingo(calledNumbers, card){ 
 	console.log(calledNumbers);
-
 	if (checkForHorizontalBingo(calledNumbers, bingoCard)){
 		console.log("HORIZONTAL BINGO!");
 		return true;
 	}
 	if (checkForVerticalBingo(calledNumbers, bingoCard)){
 		console.log("VERTICAL BINGO!");
-		 return true;
+		return true;
 	}
 	if (checkForDiagonalBingo(calledNumbers, bingoCard)){ 
 		console.log("DIAGONAL BINGO!");
 		return true;
 	}
-
 	return false;
 }
 
@@ -88,6 +96,5 @@ function checkForDiagonalBingo(calledNumbers, bingoCard){
 		}
 		index++;
 	}
-
 	return diagCount == 5;
 }
